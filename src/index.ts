@@ -18,8 +18,7 @@ router.get('/test' ,async (req, res) => {
     };
 
     try {
-        // Call ERPNext API
-        const response = await axios.post(`${process.env.APP_URL} /api/resource/Lead`, leadData, {
+        const response = await axios.post(`${process.env.APP_URL}/api/resource/Lead`, leadData, {
             headers: {
                 Authorization: `Token ${process.env.API_KEY}:${process.env.API_SECRET}`
             }
