@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get('/test' ,(req, res) => {
     console.log('API_KEY', process.env.API_KEY,process.env.API_SECRET)
-    axios.get(`${process.env.API_KEY}}/api/method/frappe.auth.get_logged_user`, {
+    axios.get(`${process.env.API_KEY}}/api/resource/Lead`, {
         headers: {
             "Authorization" : `token ${process.env.API_KEY}:${process.env.API_SECRET}`
         }
