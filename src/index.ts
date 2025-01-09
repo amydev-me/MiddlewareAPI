@@ -7,17 +7,33 @@ app.use(json());
 
 const router = express.Router();
 
-router.get('/test' ,(req, res) => {
-    console.log('API_KEY', process.env.API_KEY,process.env.API_SECRET)
-    axios.get(`${process.env.API_KEY}}/api/resource/Lead`, {
-        headers: {
-            "Authorization" : `token ${process.env.API_KEY}:${process.env.API_SECRET}`
-        }
-    }).then(({data}) => {
-        res.send(data)
-    }).catch(error => {
-        // console.log(error);
-    }) 
+router.get('/test' ,async (req, res) => {
+    
+
+    const leadData = {
+        lead_name: 'test',
+        email_id: 'test@gmail.com',
+        phone: '23424242',
+        company_name: 'test'
+    };
+
+    try {
+        // Call ERPNext API
+        const response = await axios.post(`${process.env.APP_URL} /api/resource/Lead`, leadData, {
+            headers: {
+                Authorization: `Token ${process.env.API_KEY}:${process.env.API_SECRET}`
+            }
+        });
+
+        res.json({
+            fulfillmentText: `Lead ${leadData.lead_name} has been successfully created in ERPNext!`
+        });
+    } catch (error) {
+        console.error('Error creating lead:', error);
+        res.json({
+            fulfillmentText: `Failed to create the lead. Please check your data and try again.`
+        });
+    }
 });
 
 app.use(router);
